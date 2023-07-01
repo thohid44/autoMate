@@ -37,7 +37,18 @@ class _AlReadyCarOrderListState extends State<AlReadyCarOrderList> {
                 .where("seller_id", isEqualTo: userId)
                 .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.data!.docs == null) {
+              if (snapshot.hasData == null) {
+                return Center(
+                  child: Text(
+                    "No Data found",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.sp),
+                  ),
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );

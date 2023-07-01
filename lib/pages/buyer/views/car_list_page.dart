@@ -30,7 +30,7 @@ class _CarListPageState extends State<CarListPage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.purpleAccent,
-          title: Text("My Cars"),
+          title: Text("My Car"),
           centerTitle: true,
         ),
         body: StreamBuilder(
@@ -39,7 +39,7 @@ class _CarListPageState extends State<CarListPage> {
                 .where("userId", isEqualTo: userId)
                 .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.data!.docs == null) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );

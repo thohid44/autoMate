@@ -33,8 +33,8 @@ class _SellerHomeState extends State<SellerHome> {
           child: ListView(
             children: [
               InkWell(
-                onTap: () async{
-               await FirebaseAuth.instance.signOut();
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
                 },
                 child: Container(
                   child: Text("Log Out"),
@@ -110,6 +110,9 @@ class _SellerHomeState extends State<SellerHome> {
                       .collection("order")
                       .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
                     return GridView.builder(
                         physics: BouncingScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

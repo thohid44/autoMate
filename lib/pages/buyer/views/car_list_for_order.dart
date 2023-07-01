@@ -39,7 +39,7 @@ class _CarListForOrderState extends State<CarListForOrder> {
               
                 .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.data!.docs == null) {
+             if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
