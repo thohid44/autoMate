@@ -16,14 +16,24 @@ class _EditMyCarState extends State<EditMyCar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
+        title: Text("Car Details"), 
+        centerTitle: true,
+        elevation: 0,
       ),
       body: Column(
         children: [
-          Container(
-            child: Image.asset("assets/car1.png"),
+          Card(
+            elevation: 4,
+            child: Container(
+                padding: EdgeInsets.only(top: 10.h),
+                         height: 200.h,
+                       
+              child: Image.network("${recievedData.get('url')}"),
+            ),
           ),
-
+  SizedBox(height: 15.w),
           Container(
+          
             child: Column(
             
               children: [
@@ -31,10 +41,11 @@ class _EditMyCarState extends State<EditMyCar> {
                 mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                       Container(
+             
                       child: Text("Car Name", 
                       style: TextStyle(color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.bold),),
                     ),
-                    SizedBox(width: 15.w,),
+                    SizedBox(width: 15.w),
                     Container(
                       child: Text("${recievedData.get('car_name')}", 
                       style: TextStyle(color: Colors.black),),
@@ -91,7 +102,7 @@ class _EditMyCarState extends State<EditMyCar> {
           ), 
           SizedBox(height: 20.h,), 
           ElevatedButton(
-            child: Text('Update'),
+            child: Text('Update',  style: TextStyle(color: Colors.white, fontSize: 15.sp, fontWeight: FontWeight.bold),),
             onPressed: () {},
             style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
           ),

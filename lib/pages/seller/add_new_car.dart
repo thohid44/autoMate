@@ -1,8 +1,14 @@
+import 'dart:typed_data';
+
+import 'package:auto/pages/seller/image_store_method.dart';
+import 'package:auto/pages/seller/image_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddNewCar extends StatefulWidget {
   @override
@@ -27,12 +33,36 @@ class _AddNewCarState extends State<AddNewCar> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                "Add New Car",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+              Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  "Add New Car",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              GestureDetector(
+                onTap: () {
+                  selectImage();
+                },
+                child: Container(
+                    alignment: Alignment.center,
+                    child: _image != null
+                        ? CircleAvatar(
+                            radius: 64,
+                            backgroundImage: MemoryImage(_image!),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: Colors.black,
+                            radius: 64.r,
+                            backgroundImage: NetworkImage(
+                                "https://as2.ftcdn.net/v2/jpg/01/35/19/77/1000_F_135197727_Ep1JMsgNKm1CZoJ1TEpipWKgZ8UKxc12.jpg"),
+                          )),
               ),
               SizedBox(height: 30),
               TextFormField(
@@ -104,11 +134,7 @@ class _AddNewCarState extends State<AddNewCar> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    addNewCar(
-                        carname: carname.text.toString(),
-                        model: model.text.toString(),
-                        rate: rate.text.toString(),
-                        location: location.text.toString());
+                    saveProfile();
                   },
                   child: Text(
                     "Submit",
@@ -123,32 +149,22 @@ class _AddNewCarState extends State<AddNewCar> {
     );
   }
 
-  addNewCar({
-    required String carname,
-    required String model,
-    required String rate,
-    required String location,
-  }) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    try {
-      user = auth.currentUser;
+  Uint8List? _image;
+  final picker = ImagePicker();
 
-      if (user!.uid != null) {
-        FirebaseFirestore.instance.collection('mycarList').add({
-          'car_name': carname,
-          'model': model,
-          'rate': rate,
-          "location": location,
-          "userId": user.uid.toString(),
-        });
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
 
-        Get.snackbar("Message", "Car Successfully stored"); 
-      }
-    } on FirebaseAuthException catch (e) {
-    } catch (e) {
-      print(e);
-    }
-    return user;
+  void saveProfile() async {
+    String resp = await StoreData().addNewCar(
+        carname: carname.text.toString(),
+        model: model.text.toString(),
+        rate: rate.text.toString(),
+        location: location.text.toString(),
+        file: _image!);
   }
 }

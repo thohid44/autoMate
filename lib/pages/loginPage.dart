@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto/forget_password.dart';
 import 'package:auto/pages/seller/sellerHome.dart';
 import 'package:auto/pages/home/home.dart';
 import 'package:auto/pages/registration_page.dart';
@@ -102,7 +103,9 @@ class _LoginPageState extends State<LoginPage> {
               height: 15,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(ForgetPassword());
+              },
               child: Container(
                 child: Text(
                   "Forget Password",

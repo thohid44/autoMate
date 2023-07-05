@@ -1,6 +1,6 @@
 import 'package:auto/pages/seller/add_new_car.dart';
 import 'package:auto/pages/buyer/views/car_list_for_order.dart';
-import 'package:auto/pages/buyer/views/car_list_page.dart';
+import 'package:auto/pages/seller/car_list_page.dart';
 import 'package:auto/pages/seller/car_order_Recieve_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
