@@ -1,4 +1,4 @@
-import 'package:auto/pages/seller/car_list_page.dart';
+import 'package:auto/pages/seller/my_car_list_page.dart';
 import 'package:auto/pages/home/home.dart';
 import 'package:auto/pages/loginPage.dart';
 import 'package:flutter/material.dart';

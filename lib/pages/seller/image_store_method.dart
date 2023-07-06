@@ -31,11 +31,14 @@ class StoreData {
       user = auth.currentUser;
    String imageUrl = await uploadImageToStorage('cars', file);
       if (user!.uid != null) {
-        FirebaseFirestore.instance.collection('mycarList').add({
+        var id = user.uid.toString();
+        FirebaseFirestore.instance.collection('mycarList').doc(id).set({
+           
           'car_name': carname,
           'model': model,
           'rate': rate,
           "location": location,
+           "id":id, 
           "userId": user.uid.toString(),
           'url':imageUrl.toString()
         });

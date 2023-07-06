@@ -1,6 +1,6 @@
 import 'package:auto/pages/seller/add_new_car.dart';
 import 'package:auto/pages/buyer/views/car_list_for_order.dart';
-import 'package:auto/pages/seller/car_list_page.dart';
+import 'package:auto/pages/seller/my_car_list_page.dart';
 import 'package:auto/pages/seller/car_order_Recieve_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +37,7 @@ class _SellerHomeState extends State<SellerHome> {
                   await FirebaseAuth.instance.signOut();
                 },
                 child: Container(
-                  child: Text("Log Out"),
+                  child: Text("Log Out",style: TextStyle(fontSize: 15.sp, color: Colors.black),),
                 ),
               )
             ],
