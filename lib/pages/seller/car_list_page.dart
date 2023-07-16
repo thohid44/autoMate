@@ -123,4 +123,49 @@ class _CarListPageState extends State<CarListPage> {
                   });
             }));
   }
+
+
+// void readDataOnce() {
+//   final databaseReference = FirebaseDatabase.instance.reference();
+  
+//   databaseReference.once().then((DataSnapshot snapshot) {
+//     print(snapshot.value);
+//   }).catchError((error) {
+//     print('Failed to read data: $error');
+//   });
+// }
+
+
+// void checkPostExists(String postRef) async{
+//   final databaseReference = await FirebaseDatabase.instance.reference().child(postRef);
+
+//   databaseReference.once().then((DataSnapshot snapshot) {
+//     if (snapshot.value != null) {
+//       print('Post exists.');
+//     } else {
+//       print('Post does not exist.');
+//     }
+//   }).catchError((error) {
+//     print('Failed to read data: $error');
+//   });
+// }
+
+
+// void newData(String data) {
+//   final databaseReference = FirebaseDatabase.instance.reference();
+
+//   databaseReference.set(data).then((_) {
+   
+//     databaseReference.once().then((DataSnapshot snapshot) {
+//       print('New data: ${snapshot.value}');
+//     }).catchError((error) {
+//       print('Failed to read data: $error');
+//     });
+//   }).catchError((error) {
+//     print('Failed to write data: $error');
+//   });
+// }
+
 }
+
+

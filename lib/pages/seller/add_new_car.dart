@@ -167,4 +167,35 @@ class _AddNewCarState extends State<AddNewCar> {
         location: location.text.toString(),
         file: _image!);
   }
+
+
+
+//   addData() {
+//     DatabaseReference ref = FirebaseDatabase.instance.ref("users/123");
+// ref.set({
+//           'name': "Puteri",
+//           'age': 18,
+//           'faculty': "feculty of Engineering",
+         
+//         });
+//   }
+ 
+ update(){
+  
+  var collection = FirebaseFirestore.instance.collection('collection');
+collection 
+    .doc('some_id') 
+    .update({'age' : '20', "faculty":'Faculty of computing'}) ;
+ }
+  
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+Future<void> remove() {
+  return users
+    .doc('ABC123')
+    .delete()
+    .then((value) => print("User Deleted"))
+    .catchError((error) => print("Failed to delete user: $error"));
+}
 }
