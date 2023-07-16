@@ -54,15 +54,15 @@ class _CarListPageState extends State<CarListPage> {
                         children: [
                           //
                           Container(
-                            height: 100.h,
+                            height: 120.h,
                             width: 80.w,
                             child: Image.network("${snapshot.data!.docs[index].get("url").toString()}"),
                           ),
                           SizedBox(
-                            width: 15.w,
+                            width: 10.w,
                           ),
                           Container(
-                            width: 170.w,
+                            width: 160.w,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
@@ -103,11 +103,29 @@ class _CarListPageState extends State<CarListPage> {
                                     ),
                                   ),
                                 ),
+                                 InkWell( 
+                                  onTap: (){
+ Get.to(CarDetailsPage(),
+                                      arguments: snapshot.data!.docs[index]);
+                                  },
+                                   child: Container(
+                                    width: 50.w,
+                                    padding: EdgeInsets.all(5),
+                                    color: Colors.purple,
+                                    child: Text(
+                                      "Details",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.sp,
+                                      ),
+                                    ),
+                                                                 ),
+                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            height: 100.h,
+                            height: 120.h,
                             width: 70.w,
                             child: Column(
                               children: [
@@ -125,11 +143,12 @@ class _CarListPageState extends State<CarListPage> {
                                 SizedBox(height: 10.h,) , 
                                 IconButton(
                                 onPressed: () {
-                                  Get.to(CarDetailsPage(),
-                                      arguments: snapshot.data!.docs[index]);
+                                 
                                 },
                                 icon: Icon(
-                                  Icons.arrow_forward_ios,
+                                  
+                                  Icons.delete,
+                                  size: 20,
                                   color: Colors.purple,
                                 )),
                               ],
@@ -142,48 +161,24 @@ class _CarListPageState extends State<CarListPage> {
             }));
   }
 
-
-// void readDataOnce() {
-//   final databaseReference = FirebaseDatabase.instance.reference();
-  
-//   databaseReference.once().then((DataSnapshot snapshot) {
-//     print(snapshot.value);
-//   }).catchError((error) {
-//     print('Failed to read data: $error');
-//   });
-// }
-
-
-// void checkPostExists(String postRef) async{
-//   final databaseReference = await FirebaseDatabase.instance.reference().child(postRef);
-
-//   databaseReference.once().then((DataSnapshot snapshot) {
-//     if (snapshot.value != null) {
-//       print('Post exists.');
-//     } else {
-//       print('Post does not exist.');
-//     }
-//   }).catchError((error) {
-//     print('Failed to read data: $error');
-//   });
-// }
-
-
-// void newData(String data) {
-//   final databaseReference = FirebaseDatabase.instance.reference();
-
-//   databaseReference.set(data).then((_) {
-   
-//     databaseReference.once().then((DataSnapshot snapshot) {
-//       print('New data: ${snapshot.value}');
-//     }).catchError((error) {
-//       print('Failed to read data: $error');
-//     });
-//   }).catchError((error) {
-//     print('Failed to write data: $error');
-//   });
-// }
-
+ remove() {
+  return 
+    FirebaseFirestore.instance.collection('mycarList').doc('1Wzke4cTN3qZigTtqIX8')
+    .delete()
+    .then((value) => print("User Deleted"))
+    .catchError((error) => print("Failed to delete user: $error"));
 }
+
+delete(){
+  FirebaseFirestore.instance.collection("chats").doc("ROOM_1")  
+   
+    .delete();
+}
+              
+ 
+  }
+  
+
+
 
 
