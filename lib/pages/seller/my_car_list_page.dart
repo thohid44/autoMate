@@ -30,7 +30,7 @@ class _CarListPageState extends State<CarListPage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.purpleAccent,
-          title: Text("My Car"),
+          title: Text("My Cars"),
           centerTitle: true,
         ),
         body: StreamBuilder(
@@ -49,6 +49,7 @@ class _CarListPageState extends State<CarListPage> {
                   itemBuilder: (context, index) {
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
+              
                       child: Row(
                         children: [
                           //
@@ -107,15 +108,32 @@ class _CarListPageState extends State<CarListPage> {
                           ),
                           Container(
                             height: 100.h,
-                            child: IconButton(
+                            width: 70.w,
+                            child: Column(
+                              children: [
+                                  IconButton(
                                 onPressed: () {
                                   Get.to(EditMyCar(),
+                                      arguments: snapshot.data!.docs[index]);
+                                },
+                                icon: Icon(
+                                  Icons.edit,
+                                  size:20.h, 
+
+                                  color: Colors.purple,
+                                )),
+                                SizedBox(height: 10.h,) , 
+                                IconButton(
+                                onPressed: () {
+                                  Get.to(CarDetailsPage(),
                                       arguments: snapshot.data!.docs[index]);
                                 },
                                 icon: Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.purple,
                                 )),
+                              ],
+                            )
                           )
                         ],
                       ),

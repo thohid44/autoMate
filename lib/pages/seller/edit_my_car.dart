@@ -1,3 +1,6 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,7 +19,7 @@ class _EditMyCarState extends State<EditMyCar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
-        title: Text("Car Details"), 
+        title: Text("Car Update"), 
         centerTitle: true,
         elevation: 0,
       ),
@@ -103,7 +106,13 @@ class _EditMyCarState extends State<EditMyCar> {
           SizedBox(height: 20.h,), 
           ElevatedButton(
             child: Text('Update',  style: TextStyle(color: Colors.white, fontSize: 15.sp, fontWeight: FontWeight.bold),),
-            onPressed: () {},
+            onPressed: () {
+              
+FirebaseFirestore.instance
+    .collection("mycarList")
+    .doc('')
+    .update({"car_name": "Ford"});
+            },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
           ),
         ],
@@ -111,3 +120,10 @@ class _EditMyCarState extends State<EditMyCar> {
     );
   }
 }
+
+
+
+// FirebaseFirestore.instance
+//     .collection("users")
+//     .doc("frank")
+//     .update({"age": 13, "favorites.color": "Red"});
