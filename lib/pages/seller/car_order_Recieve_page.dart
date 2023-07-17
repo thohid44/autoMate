@@ -179,6 +179,7 @@ class _CarOrderRecievePageState extends State<CarOrderRecievePage> {
           "location": recievedData.get('location'),
           "seller_id": recievedData.get('userId'),
           "buyer_id": user.uid.toString(),
+        
         });
 
         Get.snackbar("Message", "Car Successfully stored");

@@ -34,7 +34,7 @@ class _AlReadyCarOrderListState extends State<AlReadyCarOrderList> {
         body: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("order")
-                .where("seller_id", isEqualTo: userId)
+                .where("status", isEqualTo: "aprove")
                 .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData == null) {

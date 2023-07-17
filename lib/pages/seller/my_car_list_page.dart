@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CarListPage extends StatefulWidget {
   const CarListPage({super.key});
@@ -21,7 +22,7 @@ class _CarListPageState extends State<CarListPage> {
   void initState() {
     user = auth.currentUser;
     userId = user!.uid;
-    print("user id $userId"); 
+    print("user id $userId");
   }
 
   @override
@@ -48,15 +49,16 @@ class _CarListPageState extends State<CarListPage> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     return Container(
+                      height: 150.h,
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
-              
                       child: Row(
                         children: [
                           //
                           Container(
                             height: 120.h,
                             width: 80.w,
-                            child: Image.network("${snapshot.data!.docs[index].get("url").toString()}"),
+                            child: Image.network(
+                                "${snapshot.data!.docs[index].get("url").toString()}"),
                           ),
                           SizedBox(
                             width: 10.w,
@@ -103,12 +105,12 @@ class _CarListPageState extends State<CarListPage> {
                                     ),
                                   ),
                                 ),
-                                 InkWell( 
-                                  onTap: (){
- Get.to(CarDetailsPage(),
-                                      arguments: snapshot.data!.docs[index]);
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(CarDetailsPage(),
+                                        arguments: snapshot.data!.docs[index]);
                                   },
-                                   child: Container(
+                                  child: Container(
                                     width: 50.w,
                                     padding: EdgeInsets.all(5),
                                     color: Colors.purple,
@@ -119,41 +121,65 @@ class _CarListPageState extends State<CarListPage> {
                                         fontSize: 15.sp,
                                       ),
                                     ),
-                                                                 ),
-                                 ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           Container(
-                            height: 120.h,
-                            width: 70.w,
-                            child: Column(
-                              children: [
+                              height: 150.h,
+                              width: 70.w,
+                              child: Column(
+                                children: [
                                   IconButton(
-                                onPressed: () {
-                                  Get.to(EditMyCar(),
-                                      arguments: snapshot.data!.docs[index]);
-                                },
-                                icon: Icon(
-                                  Icons.edit,
-                                  size:20.h, 
-
-                                  color: Colors.purple,
-                                )),
-                                SizedBox(height: 10.h,) , 
-                                IconButton(
-                                onPressed: () {
-                                 
-                                },
-                                icon: Icon(
-                                  
-                                  Icons.delete,
-                                  size: 20,
-                                  color: Colors.purple,
-                                )),
-                              ],
-                            )
-                          )
+                                      onPressed: () {
+                                        Get.to(EditMyCar(),
+                                            arguments:
+                                                snapshot.data!.docs[index]);
+                                      },
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 20.h,
+                                        color: Colors.purple,
+                                      )),
+                                  IconButton(
+                                      onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection("mycarList")
+                                            .doc('RvKrth07G8eWegcirfpNT3z56ql1')
+                                            .delete()
+                                            .then((value) =>
+                                                print("User Deleted"))
+                                            .catchError((error) => print(
+                                                "Failed to delete user: $error"));
+                                        Get.snackbar("title",
+                                            "Data successfully deleted",
+                                            backgroundColor: Colors.deepOrange,
+                                            colorText: Colors.white);
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        size: 20.h,
+                                        color: Colors.purple,
+                                      )),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  IconButton(
+                                    onPressed: ()
+                                    {
+                                      print("object");
+                                      //   Share.shareFiles(['${snapshot.data!.docs[index].get("rate")}']);
+                                      Share.share(
+                                          'check out my website https://example.com');
+                                    },
+                                  icon: Icon(
+                                      Icons.share,
+                                      color: Colors.blue,
+                                    ),
+                                  )
+                                ],
+                              ))
                         ],
                       ),
                     );
@@ -161,24 +187,16 @@ class _CarListPageState extends State<CarListPage> {
             }));
   }
 
- remove() {
-  return 
-    FirebaseFirestore.instance.collection('mycarList').doc('1Wzke4cTN3qZigTtqIX8')
-    .delete()
-    .then((value) => print("User Deleted"))
-    .catchError((error) => print("Failed to delete user: $error"));
-}
-
-delete(){
-  FirebaseFirestore.instance.collection("chats").doc("ROOM_1")  
-   
-    .delete();
-}
-              
- 
+  remove() {
+    return FirebaseFirestore.instance
+        .collection('mycarList')
+        .doc('RvKrth07G8eWegcirfpNT3z56ql1')
+        .delete()
+        .then((value) => print("User Deleted"))
+        .catchError((error) => print("Failed to delete user: $error"));
   }
-  
 
-
-
-
+  delete() {
+    FirebaseFirestore.instance.collection("chats").doc("ROOM_1").delete();
+  }
+}
